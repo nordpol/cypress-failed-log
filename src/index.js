@@ -22,7 +22,9 @@ function writeFailedTestInfo ({
   }
   const str = JSON.stringify(info, null, 2) + '\n'
   const cleaned = cleanupFilename(testName)
-  const filename = `failed-${cleaned}.json`
+  const filename = `failed-${cleaned}.txt`
+  fileFailed = filename
+  const errorPath = Cypress.env('errorPath')
   cy.writeFile(filename, str)
     .log('saved failed test information')
 
@@ -155,6 +157,10 @@ function onFailed () {
     testCommands,
     screenshot
   })
+  const production = Cypress.env('production');
+  if( production === true) {
+      cy.sendmail(Cypress.env('reportEmailReciver'), fileFailed);
+  }
 }
 
 //   We have to do a hack to make sure OUR "afterEach" callback function
