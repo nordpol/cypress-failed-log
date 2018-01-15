@@ -4,7 +4,7 @@ const kebabCase = require('lodash.kebabcase')
 const deburr = require('lodash.deburr')
 const reject = require('lodash.reject')
 const path = require('path')
-
+var fileFailed ='';
 const cleanupFilename = s => kebabCase(deburr(s))
 
 function writeFailedTestInfo ({
@@ -25,7 +25,7 @@ function writeFailedTestInfo ({
   const filename = `failed-${cleaned}.txt`
   fileFailed = filename
   const errorPath = Cypress.env('errorPath')
-  cy.writeFile(filename, str)
+  cy.writeFile(errorPath + filename, str)
     .log('saved failed test information')
 
   // work around shell ENOENT failure in CI container
