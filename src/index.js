@@ -158,8 +158,8 @@ function onFailed () {
     screenshot
   })
   const production = Cypress.env('production');
-  if( production === true) {
-      cy.sendmail(Cypress.env('reportEmailReciver'), fileFailed);
+ if( production === true) {
+      cy.exec('node mail.js ' + Cypress.env('reportEmailReciver') + ' ' + fileFailed);
   }
 }
 
