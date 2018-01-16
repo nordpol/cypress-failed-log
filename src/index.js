@@ -157,9 +157,9 @@ function onFailed () {
     testCommands,
     screenshot
   })
-  const production = Cypress.env('production');
- if( production === true) {
-      cy.exec('node mail.js ' + Cypress.env('reportEmailReciver') + ' ' + fileFailed);
+ const emailReport = Cypress.env('emailReport');
+  if( emailReport === true) {
+      cy.exec('node mail.js "' + Cypress.env('reportEmailReciver') + '" "' + fileFailed + '"');
   }
 }
 
